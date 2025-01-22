@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carry Mark Display</title>
+    <script>
+        // Function to fetch and display carry mark
+        async function displayCarryMark() {
+            const matricNumber = document.getElementById("matricNumber").value;
+            const result = document.getElementById("result");
+
+            try {
+                // Fetch the JSON data
+                const response = await fetch("carry_mark_data.json");
+                const data = await response.json();
+
+                // Find the student's carry mark by "No Matrik"
+                const student = data.find(entry => entry["No Matrik"] === matricNumber);
+
+                if (student) {
+                    result.textContent = `Carry Mark (60%): ${student["CARRY MARK (60%)"]}`;
+                } else {
+                    result.textContent = "No Matrik not found. Please try again.";
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                result.textContent = "An error occurred while fetching data.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Carry Mark Display</h1>
+    <p>Enter your No Matrik to view your carry mark:</p>
+    <input type="text" id="matricNumber" placeholder="Enter No Matrik">
+    <button onclick="displayCarryMark()">Submit</button>
+    <p id="result" style="margin-top: 20px; font-weight: bold;"></p>
+</body>
+</html>
