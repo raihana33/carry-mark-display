@@ -7,27 +7,30 @@
     <script>
         // Function to fetch and display carry mark
         async function displayCarryMark() {
-            const matricNumber = document.getElementById("matricNumber").value.trim();
-            const result = document.getElementById("result");
+    const matricNumber = document.getElementById("matricNumber").value.trim(); // Trim whitespace
+    const result = document.getElementById("result");
 
-            try {
-                // Fetch the JSON data
-                const response = await fetch("carry_mark_data.json");
-                const data = await response.json();
+    try {
+        const response = await fetch("carry_mark_data.json"); // Ensure path is correct
+        const data = await response.json();
 
-                // Find the student's carry mark by "No Matrik"
-                const student = data.find(entry => entry["No Matrik"] === matricNumber);
+        // Debugging: Log data and input
+        console.log("Data fetched:", data);
+        console.log("User input:", matricNumber);
 
-                if (student) {
-                    result.textContent = `Carry Mark (60%): ${student["CARRY MARK (60%)"]}`;
-                } else {
-                    result.textContent = "No Matrik not found. Please try again.";
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                result.textContent = "An error occurred while fetching data.";
-            }
+        // Match as strings
+        const student = data.find(entry => entry["No Matrik"] === matricNumber);
+
+        if (student) {
+            result.textContent = `Carry Mark (60%): ${student["CARRY MARK (60%)"]}`;
+        } else {
+            result.textContent = "No Matrik not found. Please try again.";
         }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        result.textContent = "An error occurred while fetching data.";
+    }
+}
     </script>
 </head>
 <body>
